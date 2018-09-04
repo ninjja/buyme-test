@@ -23,30 +23,30 @@ export default class Draggable extends Component {
     document.addEventListener('mouseup', this.onMouseUp);
     e.preventDefault();
   }
+
   onMouseUp = (e) => {
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
     e.preventDefault();
   }
+
   onMouseMove = (e) => {
-    this.props.onMove({
-      x: Math.min(Math.max(e.pageX - this.state.relX, 0), window.innerWidth-this.props.width),
-      y: Math.min(Math.max(e.pageY - this.state.relY, 0), window.innerHeight-this.props.height),
+    const { props: { width, height, onMove }, state: { relX, relY } } = this;
+    onMove({
+      x: Math.min(Math.max(e.pageX - relX, 0), window.innerWidth - width),
+      y: Math.min(Math.max(e.pageY - relY, 0), window.innerHeight - height),
     });
     e.preventDefault();
   }
   render() {
-    return (<span><div
-    className={this.props.className}
-          style={{
-            position: 'absolute',
-            left: this.props.x,
-            top: this.props.y,
-            width: this.props.width,
-            height: this.props.height
-          }}>
-          <div className="handler" ref={ref => this.handle = ref} onMouseDown={this.onMouseDown} />
-          <div className="chart">{this.props.children}</div>
-          <ResizeObserver onResize={this.props.onResize} /></div></span>);
+    const { className, children, width, height, x: left, y: top, resizable, onResize } = this.props;
+    return (
+      <div className={className}
+           style={{resize: (resizable ? 'both' : 'none'), position: 'absolute', left, top, width, height}}>
+        <div className="handler" ref={ref => this.handle = ref} onMouseDown={this.onMouseDown} />
+        <div className="chart">{children}</div>
+        {resizable && <ResizeObserver onResize={onResize} />}
+      </div>
+    );
   }
 }

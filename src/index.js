@@ -37,7 +37,8 @@ class App extends Component {
   render() {
     const { width, height, x, y } = this.state;
     return (
-      <Draggable className="chart-wrapper"
+      <Draggable resizable
+                 className="chart-wrapper"
                  width={width}
                  height={height}
                  x={x} y={y}
