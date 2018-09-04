@@ -1,0 +1,28 @@
+h1, p {
+  font-family: Lato;
+}
+
+.chart-wrapper {
+    position: relative;
+    border: 2px solid black;
+    padding: 20px 0 10px 0;
+    overflow: hidden;
+    resize: both;
+    box-sizing: border-box;
+}
+
+.handler {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: lightgray;
+    height: 20px;
+    overflow: hidden;
+    cursor: move;
+}
+
+.chart {
+    height: 100%;
+    overflow: auto;
+}
