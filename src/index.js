@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ResizeObserver from 'react-resize-observer';
 import Chart from './components/chart';
 import Draggable from './components/draggable';
 import './style.css';
@@ -8,8 +7,8 @@ import './style.css';
 class App extends Component {
   constructor() {
     super();
-    const chartSize = window.localStorage.getItem('chartSize');
-    const chartPosition = window.localStorage.getItem('chartPosition');
+    const chartSize = localStorage.getItem('chartSize');
+    const chartPosition = localStorage.getItem('chartPosition');
     const dimentsions = chartSize ? JSON.parse(chartSize) : ({ width: 600, height: 320 });
     const position = chartPosition ? JSON.parse(chartPosition) : ({ x: 0, y: 0 });
     this.state = {

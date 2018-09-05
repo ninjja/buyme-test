@@ -13,11 +13,11 @@ export default class Draggable extends Component {
   onMouseDown = (e) => {
     if (e.button !== 0) return;
     const ref = this.handle;
-    const body = document.body;
-    const box = ref.getBoundingClientRect();
+    const { scrollLeft, clientLeft, scrollTop, clientTop } = document.body;
+    const { top, left } = ref.getBoundingClientRect();
     this.setState({
-      relX: e.pageX - (box.left + body.scrollLeft - body.clientLeft),
-      relY: e.pageY - (box.top + body.scrollTop - body.clientTop)
+      relX: e.pageX - (left + scrollLeft - clientLeft),
+      relY: e.pageY - (top + scrollTop - clientTop)
     });
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
@@ -40,9 +40,9 @@ export default class Draggable extends Component {
   }
   render() {
     const { className, children, width, height, x: left, y: top, resizable, onResize } = this.props;
+    const resize = resizable ? 'both' : 'none';
     return (
-      <div className={className}
-           style={{resize: (resizable ? 'both' : 'none'), position: 'absolute', left, top, width, height}}>
+      <div className={className} style={{position: 'absolute', resize, left, top, width, height}}>
         <div className="handler" ref={ref => this.handle = ref} onMouseDown={this.onMouseDown} />
         <div className="chart">{children}</div>
         {resizable && <ResizeObserver onResize={onResize} />}
